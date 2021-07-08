@@ -14,8 +14,8 @@
 imports:
   - path: vm.jinja
 
-  resources:
-    - name: vm-created-by-deployment-manager
-      type: vm.jinja
-      properties:
-        zone: us-central1-a
+resources:
+  - name: vm-created-by-deployment-manager
+    type: vm.jinja
+    properties:
+      zone: us-central1-a
