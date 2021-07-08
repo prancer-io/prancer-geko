@@ -11,19 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+imports:
+  - path: vm.jinja
 
-resources:
+  resources:
     - name: vm-created-by-deployment-manager
-      type: compute.v1.instance
+      type: vm.jinja
       properties:
         zone: us-central1-a
-        machineType: zones/us-central1-a/machineTypes/n1-standard-1
-        disks:
-        - deviceName: boot
-          type: PERSISTENT
-          boot: true
-          autoDelete: true
-          initializeParams:
-            sourceImage: projects/debian-cloud/global/images/family/debian-9
-        networkInterfaces:
-        - network: global/networks/default
