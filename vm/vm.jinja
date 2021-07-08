@@ -8,8 +8,8 @@ resources:
     machineType: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/zones/{{ properties["zone"] }}/machineTypes/f1-micro
     metadata:
       items:
-        - key: serial-port-enable
-          value: true
+      - key: serial-port-enable
+        value: false
     canIpForward: true
     scheduling:
       preemptible: true
