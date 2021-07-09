@@ -1,0 +1,6 @@
+imports:
+- path: network.jinja
+
+resources:
+- name: network
+  type: network.jinja
