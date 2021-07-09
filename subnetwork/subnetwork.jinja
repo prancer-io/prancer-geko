@@ -1,0 +1,9 @@
+resources:
+- type: compute.v1.subnetwork
+  name: {{ properties["subnet"] }}
+  properties:
+    ipCidrRange: {{ properties["ipCidrRange"] }}
+    network: global/networks/{{ properties["network"] }}
+    privateIpGoogleAccess: false
+    region: {{ properties["region"] }}
+    enableFlowLogs: false
