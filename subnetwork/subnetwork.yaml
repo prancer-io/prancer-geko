@@ -5,6 +5,7 @@ resources:
 - name: subnetwork
   type: subnetwork.jinja
   properties:
+    subnet: subnetwork
     region: us-central1
     network: default
     computeVersion: beta
