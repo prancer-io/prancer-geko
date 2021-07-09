@@ -1,0 +1,7 @@
+{% set URLMAP = "url-map-" + env["deployment"] %}
+
+resources:
+- type: compute.v1.targethttpsproxy
+  name: {{ TARGET }}
+  properties:
+    urlMap: $(ref.{{ URLMAP }}.selfLink)

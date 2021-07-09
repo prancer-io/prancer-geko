@@ -1,0 +1,6 @@
+imports:
+- path: targethttpsproxy.jinja
+
+resources:
+- name: targethttpsproxy
+  type: targethttpsproxy.jinja
