@@ -2,6 +2,6 @@
 
 resources:
 - type: compute.v1.targethttpsproxy
-  name: {{ TARGET }}
+  name: targethttpsproxy
   properties:
     urlMap: $(ref.{{ URLMAP }}.selfLink)
