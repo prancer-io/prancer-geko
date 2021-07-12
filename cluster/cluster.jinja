@@ -6,32 +6,31 @@ resources:
   properties:
     zone: {{ properties['zone'] }}
     cluster:
-      
       name: {{ CLUSTER_NAME }}
-      
+
       initialNodeCount: {{ properties['initialNodeCount'] }}
-      
+
       nodeConfig:
         metadata:
           disable-legacy-endpoints: true
-    
+
     podSecurityPolicyConfig:
       enabled: false
-    
+
     privateClusterConfig:
       enablePrivateNodes: false
       enablePrivateEndpoint: false
-    
+
     resourceUsageExportConfig:
       enableNetworkEgressMetering: false
       consumptionMeteringConfig:
         enabled: true
-    
+
     enableKubernetesAlpha: true
-    
+
     networkConfig:
       enableIntraNodeVisibility: false
-    
+
     addonsConfig:
       istioConfig:
         disabled: false
@@ -39,27 +38,27 @@ resources:
         disabled: false
       httpLoadBalancing:
         disabled: true
-    
+
     legacyAbac:
       enabled: true
-    
+
     masterAuthorizedNetworksConfig:
       enabled: false
       cidrBlocks:
       - displayName: public
         cidrBlock: 10.0.0.0/16
-    
+
     networkPolicy:
       provider: CALICO
       enabled: false
-    
-    loggingService: none
-    
+
+    loggingService: ''
+
     monitoringService: none
-    
+
     binaryAuthorization:
       enabled: false
-    
+
     nodePool:
       name: {{ properties['cluster_name'] }}-test1
       initialNodeCount: 1
@@ -86,4 +85,3 @@ resources:
 
     ipAllocationPolicy:
       useIpAliases: false
-      
