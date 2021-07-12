@@ -9,9 +9,6 @@ properties:
     type: integer
     description: Initial number of nodes desired in the cluster.
     default: 3
-  project_id:
-    type: string
-    description: The Google Cloud Platform project ID that the cluster belongs to.
   cluster_name:
     type: string
     description: The cluster name. Cluster names within a project must be unique. Names of deleted clusters can be reused.
