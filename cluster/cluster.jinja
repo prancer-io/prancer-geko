@@ -1,13 +1,11 @@
-{% set CLUSTER_NAME = properties['cluster_name'] %}
-
 resources:
-- name: {{ CLUSTER_NAME }}
+- name: properties['cluster_name']
   type: container.v1.cluster
   properties:
     zone: {{ properties['zone'] }}
     cluster:
       
-      name: {{ CLUSTER_NAME }}
+      name: properties['cluster_name']
       
       initialNodeCount: {{ properties['initialNodeCount'] }}
       
