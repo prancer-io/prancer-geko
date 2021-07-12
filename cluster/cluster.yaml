@@ -1,0 +1,8 @@
+imports:
+- path: cluster.jinja
+
+resources:
+- name: my-cluster
+  type: cluster.jinja
+  properties:
+    zone: ZONE_TO_RUN

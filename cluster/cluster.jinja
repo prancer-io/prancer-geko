@@ -1,0 +1,75 @@
+{% set NAME_PREFIX = env['deployment'] + '-' + env['name'] %}
+{% set CLUSTER_NAME = NAME_PREFIX %}
+{% set TYPE_NAME = NAME_PREFIX + '-type' %}
+
+resources:
+- name: {{ CLUSTER_NAME }}
+  type: container.v1.cluster
+  properties:
+    zone: {{ properties['zone'] }}
+    cluster:
+      
+      name: {{ CLUSTER_NAME }}
+      
+      initialNodeCount: {{ properties['initialNodeCount'] }}
+      
+      nodeConfig:
+        metadata:
+          disable-legacy-endpoints: true
+    
+    podSecurityPolicyConfig:
+      enabled: false
+    
+    privateClusterConfig:
+      enablePrivateNodes: false
+      enablePrivateEndpoint: false
+    
+    resourceUsageExportConfig:
+      enableNetworkEgressMetering: false
+      consumptionMeteringConfig:
+        enabled: true
+    
+    enableKubernetesAlpha: true
+    
+    networkConfig:
+      enableIntraNodeVisibility: false
+    
+    addonsConfig:
+      istioConfig:
+        disabled: false
+      kubernetesDashboard:
+        disabled: false
+      httpLoadBalancing:
+        disabled: true
+    
+    legacyAbac:
+      enabled: true
+    
+    masterAuthorizedNetworksConfig:
+      enabled: false
+      cidrBlocks:
+      - displayName: public
+        cidrBlock: 10.0.0.0/16
+    
+    networkPolicy:
+      provider: CALICO
+      enabled: false
+    
+    loggingService: none
+    
+    monitoringService: none
+    
+    binaryAuthorization:
+      enabled: false
+    
+    nodePools:
+    - project_id: {{ properties['project_id'] }}
+      cluster_name: {{ properties['cluster_name'] }}
+      ipAllocationPolicy:
+        useIpAliases: false
+        createSubnetwork: true
+        clusterIpv4CidrBlock: ""
+        nodeIpv4CidrBlock: ""
+        servicesIpv4CidrBlock: ""
+        tpuIpv4CidrBlock: ""
+        useRoutes: false
