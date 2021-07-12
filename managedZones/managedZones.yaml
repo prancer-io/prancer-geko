@@ -1,9 +1,9 @@
 imports:
-- path: one_a_record.jinja
+- path: managedZones.jinja
 
 resources:
-- name: rrset-template-1
-  type: one_a_record.jinja
+- name: managedZones
+  type: managedZones.jinja
   properties:
     rrsetDomain: dm-testing-a-record.com
     rrsetName: dm_testing_rrset_1
