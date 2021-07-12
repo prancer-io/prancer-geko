@@ -1,0 +1,23 @@
+resources:
+- name: {{ properties["zoneName"] }}
+  type: dns.v1.managedzone
+  properties:
+    description: >
+      Managed zone for deployment {{ env["deployment"] }}
+        and zone {{ properties["zoneName"] }}
+    dnsName: {{ properties["zoneDnsName"] }}
+    dnssecConfig:
+      state: off
+      defaultKeySpecs:
+        keyType: zonesigning
+        algorithm: rsasha1
+- name: {{ properties["rrsetName"] }}
+  type: dns.v1.resourceRecordSets
+  properties:
+    name: {{ properties["rrsetDomain"] }}
+    managedZone: $(ref.{{ properties["zoneName"] }}.name)
+    records:
+    - type: A
+      ttl: 50
+      rrdatas:
+      - 10.40.10.0
