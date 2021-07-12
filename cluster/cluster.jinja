@@ -1,6 +1,4 @@
-{% set NAME_PREFIX = env['deployment'] + '-' + env['name'] %}
-{% set CLUSTER_NAME = NAME_PREFIX %}
-{% set TYPE_NAME = NAME_PREFIX + '-type' %}
+{% set CLUSTER_NAME = 'cluster1' %}
 
 resources:
 - name: {{ CLUSTER_NAME }}
