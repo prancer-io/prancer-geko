@@ -1,0 +1,6 @@
+imports:
+- path: bucket.jinja
+
+resources:
+- type: bucket.jinja
+  name: mybucket

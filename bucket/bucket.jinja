@@ -1,0 +1,20 @@
+s{% set BUCKETNAME = "bucket-" + env["deployment"]  %}
+
+resources:
+- type: storage.v1.bucket
+  name: {{ BUCKETNAME }}
+  properties:
+    predefinedAcl: projectPrivate
+    projection: full
+    location: US
+    storageClass: STANDARD
+    logging:
+      logBucket: $(ref.{{ BUCKETNAME }}.name)
+      logObjectPrefix: log-prefix
+    versioning:
+      enabled: false
+    acl:
+    - bucket: $(ref.{{ BUCKETNAME }}.name)
+      domain: www.google.com
+      email: logging
+      role: OWNER
