@@ -9,12 +9,12 @@ resources:
     location: US
     storageClass: STANDARD
     logging:
-      logBucket: $(ref.{{ BUCKETNAME }})
+      logBucket: {{ BUCKETNAME }}
       logObjectPrefix: log-prefix
     versioning:
       enabled: false
     acl:
-    - bucket: $(ref.{{ BUCKETNAME }})
+    - bucket: {{ BUCKETNAME }}
       domain: www.google.com
       email: logging
       role: OWNER
