@@ -1,4 +1,4 @@
-s{% set BUCKETNAME = "bucket-" + env["deployment"]  %}
+{% set BUCKETNAME = "bucket-" + env["deployment"]  %}
 
 resources:
 - type: storage.v1.bucket
