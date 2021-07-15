@@ -7,10 +7,15 @@ resources:
         and zone {{ properties["zoneName"] }}
     dnsName: {{ properties["zoneDnsName"] }}
     dnssecConfig:
-      state: off
+      state: 'off'
       defaultKeySpecs:
-        keyType: zonesigning
+      - keyType: keySigning
         algorithm: rsasha1
+      - keyType: zoneSigning
+        algorithm: rsasha1
+      kind: dns#managedZoneDnsSecConfig
+      nonExistence: nsec3
+
 - name: {{ properties["rrsetName"] }}
   type: dns.v1.resourceRecordSets
   properties:
