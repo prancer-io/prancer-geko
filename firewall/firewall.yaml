@@ -1,0 +1,7 @@
+imports:
+- path: firewall.jinja
+
+resources:
+- name: firewall
+  type: firewall.jinja
+  properties:

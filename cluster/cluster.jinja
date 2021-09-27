@@ -1,0 +1,87 @@
+resources:
+- name: properties['cluster_name']
+  type: container.v1.cluster
+  properties:
+    zone: {{ properties['zone'] }}
+    cluster:
+      
+      name: properties['cluster_name']
+      
+      initialNodeCount: {{ properties['initialNodeCount'] }}
+      
+    nodeConfig:
+      metadata:
+        disable-legacy-endpoints: true
+    
+    podSecurityPolicyConfig:
+      enabled: false
+    
+    privateClusterConfig:
+      enablePrivateNodes: false
+      enablePrivateEndpoint: false
+    
+    resourceUsageExportConfig:
+      enableNetworkEgressMetering: false
+      consumptionMeteringConfig:
+        enabled: true
+    
+    enableKubernetesAlpha: true
+    
+    networkConfig:
+      enableIntraNodeVisibility: false
+    
+    addonsConfig:
+      istioConfig:
+        disabled: false
+      kubernetesDashboard:
+        disabled: false
+      httpLoadBalancing:
+        disabled: true
+    
+    legacyAbac:
+      enabled: true
+    
+    masterAuthorizedNetworksConfig:
+      enabled: false
+      cidrBlocks:
+      - displayName: public
+        cidrBlock: 10.0.0.0/16
+    
+    networkPolicy:
+      provider: CALICO
+      enabled: false
+    
+    loggingService: none
+    
+    monitoringService: none
+    
+    binaryAuthorization:
+      enabled: false
+    
+    nodePool:
+      name: {{ properties['cluster_name'] }}-test1
+      initialNodeCount: 1
+      autoscaling:
+        enabled: true
+        minNodeCount: 1
+        maxNodeCount: 3
+      management:
+        autoUpgrade: true
+        autoRepair: true
+      config:
+        machineType: custom-2-4096
+        diskSizeGb: 20
+        preemptible: false
+        imageType: COS
+        oauthScopes:
+        - https://www.googleapis.com/auth/compute
+        - https://www.googleapis.com/auth/devstorage.read_only
+        - https://www.googleapis.com/auth/logging.write
+        - https://www.googleapis.com/auth/monitoring
+        - https://www.googleapis.com/auth/cloud_debugger
+        localSsdCount: 0
+        serviceAccount: svc-{{ properties['cluster_name'] }}@{{ env['project'] }}.iam.gserviceaccount.com
+
+    ipAllocationPolicy:
+      useIpAliases: false
+      

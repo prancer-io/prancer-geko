@@ -1,0 +1,15 @@
+imports:
+- path: subnetwork.jinja
+
+resources:
+- name: subnetwork
+  type: subnetwork.jinja
+  properties:
+    subnet: subnetwork
+    region: us-central1
+    network: default
+    computeVersion: beta
+    ipCidrRange: 10.10.10.0/24
+    secondaryIpRanges:
+    - ipCidrRange: 172.16.0.0/12
+      rangeName: my-secondary-range

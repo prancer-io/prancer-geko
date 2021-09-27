@@ -1,0 +1,12 @@
+imports:
+- path: managedZones.jinja
+
+resources:
+- name: managedZones
+  type: managedZones.jinja
+  properties:
+    rrsetDomain: dm-testing-a-record.com
+    rrsetName: dm_testing_rrset_1
+    zoneDnsName: dm-testing-a-record.com
+    zoneName: dm_testing_zone_1
+    version: v1
