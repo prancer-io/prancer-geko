@@ -1,0 +1,20 @@
+resources:
+#type: logging.v2.sink
+- type: gcp-types/logging-v2:projects.sinks
+  name: my-sink
+  properties:
+    sink: sink-{{ env['deployment'] }}
+    destination: pubsub.googleapis.com/$(ref.my-topic.name)
+    filter: {{ properties['filter'] }}
+    outputVersionFormat: V2
+#type: logging.v2.metric
+- type: gcp-types/logging-v2:projects.metrics
+  name: my-metric
+  properties:
+    metric: metric-{{ env['deployment'] }}
+    filter: {{ properties['filter'] }}
+#type: pubsub.v1.topic
+- type: gcp-types/pubsub-v1:projects.topics
+  name: my-topic
+  properties:
+    topic: {{ env["deployment"] }}

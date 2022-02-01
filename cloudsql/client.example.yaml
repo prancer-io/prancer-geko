@@ -9,3 +9,4 @@ resources:
     properties:
       cloud-sql-instances: example-cloudsql:us-central1:db01-cloudsql-master
       clientCount: 2
+      databaseVersion: MYSQL_5_7
