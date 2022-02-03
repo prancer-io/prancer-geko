@@ -44,9 +44,7 @@ resources:
       replicationType: SYNCHRONOUS
       locationPreference:
         zone: {{ properties['cloudsql']['zone'] }}
-      {% if properties['databaseFlags'] %}
-      databaseFlags: {{ properties['databaseFlags'] }}
-      {% endif %}
+      databaseFlags: true
       activationPolicy: ALWAYS
       backupConfiguration:
         enabled: true
@@ -91,34 +89,26 @@ resources:
   {% endif %}
 {% endfor %}
 
-{% if properties['database'] %}
 - name: {{ ID }}-db
   type: sqladmin.v1beta4.database
   properties:
     name: {{ properties['database']['name'] }}
     instance: $(ref.{{ ID }}-master.name)
-    charset: {{ properties['database']['charset'] }}
+    charset: utf-8
   metadata:
     dependsOn: 
       {{ dbDeps }}
-{% endif %}
 
-{% if properties['dbUser'] %}
 - name: {{ ID }}-db-root
   type: sqladmin.v1beta4.user
   properties:
     name: {{ properties['dbUser']['name'] }}
-    host:  "{{ properties['dbUser']['host'] }}"
+    host:  ""
     instance: $(ref.{{ ID }}-master.name)
     password: {{ properties['dbUser']['password'] }}
   metadata:
     dependsOn:
-    {% if properties['database'] %}
-      - {{ ID }}-db
-    {% else %}
       {{ dbDeps }}  
-    {% endif %}
-{% endif %}
 
 outputs:
   - name: {{ ID }}-master-ip

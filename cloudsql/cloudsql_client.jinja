@@ -31,8 +31,8 @@ resources:
 - name: {{ ID }}-{{ i }}
   type: compute.v1.instance
   properties:
-    machineType: zones/{{ properties['zone'] }}/machineTypes/{{ properties['machineType'] }}
-    zone: {{ properties['zone'] }}
+    machineType: zones/us-central1-b/machineTypes/n1-standard-4
+    zone: us-central1-b
     metadata:
       items:
         - key: startup-script
@@ -50,11 +50,11 @@ resources:
         type: PERSISTENT
         initializeParams:
           diskSizeGb: {{ properties['diskSizeGb'] }}
-          sourceImage: {{ properties['sourceImage' ] }}
+          sourceImage: projects/centos-cloud/global/images/family/centos-7
     networkInterfaces:
       - name: {{ ID }}-eth0
-        network: {{ properties['network'] }}
-        subnetwork: regions/{{ properties['region'] }}/subnetworks/{{ properties['subnet'] }}
+        network: global/networks/default
+        subnetwork: regions/us-central1/subnetworks/default
         accessConfigs:
           - name: eth0
             type: ONE_TO_ONE_NAT

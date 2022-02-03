@@ -69,8 +69,8 @@ resources:
 - type: gcp-types/compute-v1:disks
   name: disk-{{ env["deployment"] }}
   properties:
-    zone: {{ properties["zone"] }}
-    machineType: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/zones/{{ properties["zone"] }}/machineTypes/f1-micro
+    zone: us-west2
+    machineType: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/zones/us-west2/machineTypes/f1-micro
     sizeGb: 10
-    type: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/zones/{{ properties["zone"] }}/diskTypes/pd-standard
+    type: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/zones/us-west2/diskTypes/pd-standard
     sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-7-wheezy-v20140619
