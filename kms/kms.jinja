@@ -32,9 +32,7 @@ resources:
       - role: roles/cloudkms.admin
         members:
         - "user:{{ properties["user"] }}"
-{% if properties["create_crypto_key_version"] %}
 - name: crypto-key-version
   type: gcp-types/cloudkms-v1:projects.locations.keyRings.cryptoKeys.cryptoKeyVersions
   properties:
     parent: $(ref.cryptoKey.name)
-{% endif %}

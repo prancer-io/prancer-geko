@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 #}
 
-{% set ID = env['deployment'] + '-' + env['name'] %}
+{% set ID = env['deployment'] + '-' + "" %}
 
 {%- macro dbDependencyList(failover='', readReplicas='') -%}
   {% if failover %}
@@ -33,9 +33,10 @@ resources:
   properties:
     backendType: SECOND_GEN
     instanceType: CLOUD_SQL_INSTANCE
-    databaseVersion: {{ properties['cloudsql']['databaseVersion'] }}
+    databaseVersion: mysql
     region: {{ properties['cloudsql']['region'] }}
     settings:
+      userLabels: user-label
       tier: {{ properties['cloudsql']['tier'] }}
       dataDiskSizeGb: {{ properties['cloudsql']['dataDiskSizeGb'] }}
       dataDiskType: {{ properties['cloudsql']['dataDiskType'] }}
@@ -43,16 +44,15 @@ resources:
       replicationType: SYNCHRONOUS
       locationPreference:
         zone: {{ properties['cloudsql']['zone'] }}
-      {% if properties['databaseFlags'] %}
-      databaseFlags: {{ properties['databaseFlags'] }}
-      {% endif %}
+      databaseFlags: true
       activationPolicy: ALWAYS
       backupConfiguration:
         enabled: true
-        binaryLogEnabled: true
+        binaryLogEnabled: false
         startTime: "{{ properties['cloudsql']['backupStartTime'] }}"
       ipConfiguration:
         authorizedNetworks: {{ properties['cloudsql']['authorizedNetworks'] }}
+        requireSsl: false
 
 {% if properties['failover'] %}
 - name: {{ ID }}-failover
@@ -60,7 +60,7 @@ resources:
   properties:
     backendType: SECOND_GEN
     instanceType: READ_REPLICA_INSTANCE
-    databaseVersion: {{ properties['cloudsql']['databaseVersion'] }}
+    databaseVersion: postgres
     region: {{ properties['cloudsql']['region'] }}
     masterInstanceName: $(ref.{{ ID }}-master.name)
     replicaConfiguration:
@@ -75,7 +75,7 @@ resources:
   properties:
     backendType: SECOND_GEN
     instanceType: READ_REPLICA_INSTANCE
-    databaseVersion: {{ properties['cloudsql']['databaseVersion'] }}
+    databaseVersion: postgres
     region: {{ properties['cloudsql']['region'] }}
     masterInstanceName: $(ref.{{ ID }}-master.name)
     replicaConfiguration:
@@ -89,34 +89,26 @@ resources:
   {% endif %}
 {% endfor %}
 
-{% if properties['database'] %}
 - name: {{ ID }}-db
   type: sqladmin.v1beta4.database
   properties:
-    name: {{ properties['database']['name'] }}
+    name: ""
     instance: $(ref.{{ ID }}-master.name)
-    charset: {{ properties['database']['charset'] }}
+    charset: utf-8
   metadata:
     dependsOn: 
       {{ dbDeps }}
-{% endif %}
 
-{% if properties['dbUser'] %}
 - name: {{ ID }}-db-root
   type: sqladmin.v1beta4.user
   properties:
-    name: {{ properties['dbUser']['name'] }}
-    host:  "{{ properties['dbUser']['host'] }}"
+    name: ""
+    host:  ""
     instance: $(ref.{{ ID }}-master.name)
     password: {{ properties['dbUser']['password'] }}
   metadata:
     dependsOn:
-    {% if properties['database'] %}
-      - {{ ID }}-db
-    {% else %}
       {{ dbDeps }}  
-    {% endif %}
-{% endif %}
 
 outputs:
   - name: {{ ID }}-master-ip
