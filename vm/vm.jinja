@@ -5,6 +5,7 @@ resources:
   name: {{ NAME_PREFIX }}-vm
   properties:
     zone: {{ properties["zone"] }}
+    status: RUNNING
     machineType: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/zones/{{ properties["zone"] }}/machineTypes/f1-micro
     metadata:
       items:
@@ -21,6 +22,12 @@ resources:
       initializeParams:
         diskName: {{ NAME_PREFIX }}-disk
         sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
+      sourceSnapshotEncryptionKey:
+        rawKey: SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0=
+        rsaEncryptedKey: ieCx/NcW06PcT7Ep1X6LUTc/hLvUDYyzSZPPVCVPTVEohpeHASqC8uw5TzyO9U+Fka9JFH z0mBibXUInrC/jEk014kCK/NPjYgEMOyssZ4ZINPKxlUh2zn1bV+MCaTICrdmuSBTWlUUiFoD D6PYznLwh8ZNdaheCeZ8ewEXgFQ8V+sDroLaN3Xs3MDTXQEMMoNUXMCZEIpg9Vtp9x2oe==
+        kmsKeyName: projects/ kms_project_id/locations/ region/keyRings/key_region/cryptoKeys/key
+        sha256: acXTX3rxrKAFTF0tYVLvydU1riRZTvUNC4g5I11NY+c=
+        kmsKeyServiceAccount: name@ projectId.iam.gserviceaccount.com
 
     networkInterfaces:
     - network: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/global/networks/default
@@ -28,3 +35,18 @@ resources:
       accessConfigs:
       - name: External NAT
         type: ONE_TO_ONE_NAT
+
+    labels:
+      - name: wrench
+      - mass: 1.3kg
+      - count: 3
+ 
+    serviceAccounts:
+      - email: compute@developer.gserviceaccount.com
+        scopes: https://www.googleapis.com/auth/cloud-platform
+    
+    shieldedInstanceConfig:
+      enableSecureBoot: true
+      enableVtpm: true
+      enableIntegrityMonitoring: true
+

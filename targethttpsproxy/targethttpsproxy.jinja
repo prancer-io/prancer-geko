@@ -5,3 +5,5 @@ resources:
   name: targethttpsproxy
   properties:
     urlMap: $(ref.{{ URLMAP }}.selfLink)
+    sslPolicy: null
+    quicOverride: disable

@@ -19,6 +19,7 @@ resources:
 - name: {{ ID }}-allow-ssh
   type: compute.v1.firewall
   properties:
+    name: default
     targetTags:
       - {{ ID }}-ssh
     allowed:

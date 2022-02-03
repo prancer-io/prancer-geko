@@ -1,17 +1,20 @@
 resources:
-- name: properties['cluster_name']
+- name: test-cluster
   type: container.v1.cluster
   properties:
     zone: {{ properties['zone'] }}
     cluster:
-      
-      name: properties['cluster_name']
-      
-      initialNodeCount: {{ properties['initialNodeCount'] }}
-      
+      name: test-cluster
+      initialNodeCount: 1
+    
+    locations: ["Changhua County, Taiwan, APAC", "Mumbai, India APAC", "Hamina, Finland, Europe"]
+
+    currentNodeCount: 2
+
     nodeConfig:
       metadata:
         disable-legacy-endpoints: true
+      imageType: COS
     
     podSecurityPolicyConfig:
       enabled: false
@@ -29,6 +32,8 @@ resources:
     
     networkConfig:
       enableIntraNodeVisibility: false
+    
+    network: default
     
     addonsConfig:
       istioConfig:
@@ -58,8 +63,18 @@ resources:
     binaryAuthorization:
       enabled: false
     
+    masterAuth:
+      clientKey: acXTX3rxrKAFTF0tYVLvydU1riRZTvUNC4g5I11NY+c=
+      clientCertificate: -----BEGIN CERTIFICATE-----MIIDBjCCAe6....IM1g==-----END CERTIFICATE-----
+    
+    resourceLabels:
+      - goog-composer-version: composer-1
+    
+    workloadIdentityConfig:
+      workloadPool: 
+
     nodePool:
-      name: {{ properties['cluster_name'] }}-test1
+      name: {{ test-cluster }}-test1
       initialNodeCount: 1
       autoscaling:
         enabled: true
@@ -80,8 +95,37 @@ resources:
         - https://www.googleapis.com/auth/monitoring
         - https://www.googleapis.com/auth/cloud_debugger
         localSsdCount: 0
-        serviceAccount: svc-{{ properties['cluster_name'] }}@{{ env['project'] }}.iam.gserviceaccount.com
+        serviceAccount: svc-{{ test-cluster }}@{{ env['project'] }}.iam.gserviceaccount.com
 
     ipAllocationPolicy:
       useIpAliases: false
+
+    nodePools:
+      - name: {{ test-cluster }}-test2
+        config:
+          machineType: g1-small
+          diskSizeGb: 10
+          oauthScopes:
+          - https://www.googleapis.com/auth/devstorage.read_only
+          imageType: COS
+          serviceAccount: default
+          shieldedInstanceConfig:
+            enableSecureBoot: false
+            enableIntegrityMonitoring: false
+        initialNodeCount: 1
+        autoscaling:
+          enabled: true
+          minNodeCount: 1
+          maxNodeCount: 2
+        management:
+          autoUpgrade: true
+          autoRepair: true
+        workloadMetadataConfig:
+          mode: gke_metadata
+        node_pool:
+          management:
+            autoRepair: false
+            autoUpgrade: false
       
+    shieldedNodes:
+      enabled: true

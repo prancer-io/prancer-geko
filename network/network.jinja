@@ -2,6 +2,7 @@ resources:
 - type: compute.v1.network
   name: network-{{ env["deployment"] }}
   properties:
+    name: default
     routingConfig:
       routingMode: REGIONAL
     autoCreateSubnetworks: false
