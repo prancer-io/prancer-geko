@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 #}
 
-{% set ID = env['deployment'] + '-' + env['name'] %}
+{% set ID = env['deployment'] + '-' + "" %}
 
 {%- macro dbDependencyList(failover='', readReplicas='') -%}
   {% if failover %}
@@ -92,7 +92,7 @@ resources:
 - name: {{ ID }}-db
   type: sqladmin.v1beta4.database
   properties:
-    name: {{ properties['database']['name'] }}
+    name: ""
     instance: $(ref.{{ ID }}-master.name)
     charset: utf-8
   metadata:
@@ -102,7 +102,7 @@ resources:
 - name: {{ ID }}-db-root
   type: sqladmin.v1beta4.user
   properties:
-    name: {{ properties['dbUser']['name'] }}
+    name: ""
     host:  ""
     instance: $(ref.{{ ID }}-master.name)
     password: {{ properties['dbUser']['password'] }}

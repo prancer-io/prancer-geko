@@ -59,7 +59,7 @@ resources:
           - name: eth0
             type: ONE_TO_ONE_NAT
     serviceAccounts:
-      - email: {{ properties['serviceAccount'] }}
+      - email: compute@developer.gserviceaccount.com
         scopes:
           - 'https://www.googleapis.com/auth/cloud-platform'
     tags:
