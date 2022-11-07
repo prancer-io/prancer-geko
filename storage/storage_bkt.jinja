@@ -1,4 +1,7 @@
+{% set LOGBUCKET = "log-bucket-" + env["deployment"]  %}
+
 resources:
+#- type: storage.v1.bucket
 - type: gcp-types/storage-v1:buckets
   name: {{ LOGBUCKET }}
   properties:
@@ -6,7 +9,8 @@ resources:
     projection: full
     location: US
     storageClass: STANDARD
-- type: storage-v1:buckets
+#- type: storage.v1.bucket
+- type: gcp-types/storage-v1:buckets
   name: bucket-{{ env["deployment"] }}
   properties:
     predefinedAcl: projectPrivate
@@ -17,6 +21,7 @@ resources:
       - bucket: bucket-{{ env["deployment"] }}
         domain: www.google.com
         email: scoobydoo@google.com
+        # 657686986194 is the number for project ccit-testing
         entity: project-editors-657686986194
         role: READER
         projectTeam:
@@ -54,7 +59,6 @@ resources:
     website:
       mainPageSuffix: http://www.google.com/
       notFoundpage: http://www.google.com/not-found
-  properties:
     storageClass: {{ properties['storageClass'] }}
     acl:
         - role: OWNER
@@ -63,7 +67,24 @@ resources:
         entity: "project-viewers-1234567890"
         - role: OWNER
         entity: "project-editors-1234567890"
- 
+  {% if properties['owners'] %}
+  {% for user in properties['owners'] %}
+    - role: OWNER
+    entity: "user-{{ user }}"
+  {% endfor %}
+  {% endif %}
+  {% if properties['editors'] %}
+  {% for user in properties['editors'] %}
+    - role: WRITER
+    entity: "user-{{ user }}"
+  {% endfor %}
+  {% endif %}
+  {% if properties['readers'] %}
+  {% for user in properties['readers'] %}
+    - role: READER
+    entity: "user-{{ user }}"
+  {% endfor %}
+  {% endif %}
     bindings:
       - role: 'roles/storage'
         members:
