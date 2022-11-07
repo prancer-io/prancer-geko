@@ -1,0 +1,8 @@
+imports:
+- path: project_iam.jinja
+
+resources:
+- name: test
+  type: project_iam.jinja
+  properties:
+     serviceAccount: UNIQUE_SUFFIX

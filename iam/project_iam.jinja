@@ -1,0 +1,22 @@
+resources:
+- name: My_Iam_policy
+  type: iam.v1.projects
+  properties:
+    accountId: My_Iam_policy
+    displayName: My_Iam_policy
+
+- name: set-account-roles
+  type: iam.v1.projects
+  action: gcp-types/iam-v1:iam.projects.serviceAccounts.setIamPolicy
+  metadata:
+    runtimePolicy:
+    - CREATE
+    dependsOn:  
+    -  My_Iam_policy
+  properties:
+    resource: My_Iam_policy
+    policy:
+      bindings:
+      - role: 'roles/viewer'
+        members:
+        - serviceAccount:{{ properties['serviceAccount'] }}@iam.gserviceaccount.com
