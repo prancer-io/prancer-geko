@@ -7,4 +7,4 @@ resources:
   properties:
     storageClass: MULTI_REGIONAL
     owners:
-    - prancer-compliance@my-project-1480960736892.iam.gserviceaccount.com	
+    - prancer-compliance@my-project-1480960736892.iam.gserviceaccount.com
