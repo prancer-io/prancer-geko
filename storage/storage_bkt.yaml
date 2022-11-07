@@ -1,6 +1,6 @@
 imports:
-- path: storage_bkt.jinja
-
+  - path: storage_bkt.jinja
+  
 resources:
 - name: bucket
   type: storage_bkt.jinja
