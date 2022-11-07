@@ -67,24 +67,6 @@ resources:
         entity: "project-viewers-1234567890"
         - role: OWNER
         entity: "project-editors-1234567890"
-  {% if properties['owners'] %}
-  {% for user in properties['owners'] %}
-    - role: OWNER
-    entity: "user-{{ user }}"
-  {% endfor %}
-  {% endif %}
-  {% if properties['editors'] %}
-  {% for user in properties['editors'] %}
-    - role: WRITER
-    entity: "user-{{ user }}"
-  {% endfor %}
-  {% endif %}
-  {% if properties['readers'] %}
-  {% for user in properties['readers'] %}
-    - role: READER
-    entity: "user-{{ user }}"
-  {% endfor %}
-  {% endif %}
     bindings:
       - role: 'roles/storage'
         members:
