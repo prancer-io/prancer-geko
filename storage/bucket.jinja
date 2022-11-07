@@ -60,6 +60,10 @@ resources:
       mainPageSuffix: http://www.google.com/
       notFoundpage: http://www.google.com/not-found
   properties:
+    bindings:
+      - role: 'roles/viewer'
+        members:
+        - allUsers
       storageClass: {{ properties['storageClass'] }}
       acl:
       - role: OWNER
