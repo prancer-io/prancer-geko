@@ -1,9 +1,9 @@
 imports:
-- path: bucket.jinja
+- path: storage_bkt.jinja
 
 resources:
 - name: bucket
-  type: bucket.jinja
+  type: storage_bkt.jinja
   properties:
     storageClass: MULTI_REGIONAL
     owners:
