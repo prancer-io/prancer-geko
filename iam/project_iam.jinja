@@ -1,10 +1,4 @@
 resources:
-- name: {{ env["project"] }}-ProjectIam
-  type: iam.v1.serviceAccount 
-  properties:
-    accountId: {{ env["project"] }}
-    displayName: prancer-project-iam-test
-
 - name: Prancer-test
   type: gcp-types/iam-v1:iam.projects.serviceAccounts.getIamPolicy
   properties:
