@@ -1,22 +1,21 @@
 resources:
-- name: My_Iam_policy
-  type: iam.v1.projects
+- name: {{ env["project"] }}-ProjectIam
+  type: iam.v1.serviceAccount 
   properties:
-    accountId: My_Iam_policy
-    displayName: My_Iam_policy
+    accountId: {{ env["project"] }}
+    displayName: prancer-project-iam-test
 
-- name: set-account-roles
-  type: iam.v1.projects
-  action: gcp-types/iam-v1:iam.projects.serviceAccounts.setIamPolicy
-  metadata:
-    runtimePolicy:
-    - CREATE
-    dependsOn:  
-    -  My_Iam_policy
+- name: Prancer-test
+  action: gcp-types/iam-v1:iam.projects.serviceAccounts.getIamPolicy
   properties:
-    resource: My_Iam_policy
+    resource: projects/{{ env["project"] }}/serviceAccounts/{{ properties['serviceAccount'] }}
     policy:
       bindings:
       - role: 'roles/viewer'
         members:
-        - serviceAccount:{{ properties['serviceAccount'] }}@iam.gserviceaccount.com
+        - serviceAccount:{{ properties['serviceAccount'] }}
+      auditConfigs:
+      - auditLogConfigs:
+        - logType: ADMIN_READ
+        service: cloudkms.googleapis.com
+      version: 3

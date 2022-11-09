@@ -5,4 +5,4 @@ resources:
 - name: test
   type: project_iam.jinja
   properties:
-     serviceAccount: UNIQUE_SUFFIX
+     serviceAccount: pracer-iac-resources@my-project-1480960736892.iam.gserviceaccount.com

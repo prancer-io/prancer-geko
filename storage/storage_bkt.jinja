@@ -27,6 +27,10 @@ resources:
         projectTeam:
           team: editors
           projectNumber: 657686986194
+    bindings:
+      - role: 'roles/storage'
+        members:
+        - allUsers
     logging:
       logBucket: $(ref.{{ LOGBUCKET }}.name)
       logObjectPrefix: log-prefix
@@ -36,14 +40,3 @@ resources:
       mainPageSuffix: http://www.google.com/
       notFoundpage: http://www.google.com/not-found
     storageClass: {{ properties['storageClass'] }}
-    acl:
-        - role: OWNER
-          entity: "project-owners-1234567890"
-        - role: READER
-        entity: "project-viewers-1234567890"
-        - role: OWNER
-        entity: "project-editors-1234567890"
-    bindings:
-      - role: 'roles/storage'
-        members:
-        - allUsers
