@@ -6,12 +6,12 @@ resources:
     displayName: prancer-project-iam-test
 
 - name: Prancer-test
-  action: gcp-types/iam-v1:iam.projects.serviceAccounts.getIamPolicy
+  type: gcp-types/iam-v1:iam.projects.serviceAccounts.getIamPolicy
   properties:
     resource: projects/{{ env["project"] }}/serviceAccounts/{{ properties['serviceAccount'] }}
     policy:
       bindings:
-      - role: 'roles/viewer'
+      - role: "roles/resourcemanager.projectIamAdmin"
         members:
         - serviceAccount:{{ properties['serviceAccount'] }}
       auditConfigs:
