@@ -1,16 +1,16 @@
 {% set LOGBUCKET = "log-bucket-" + env["deployment"]  %}
 
 resources:
-#- type: storage.v1.bucket
-- type: gcp-types/storage-v1:buckets
+- type: storage.v1.bucket
+#- type: gcp-types/storage-v1:buckets
   name: {{ LOGBUCKET }}
   properties:
     predefinedAcl: projectPrivate
     projection: full
     location: US
     storageClass: STANDARD
-#- type: storage.v1.bucket
-- type: gcp-types/storage-v1:buckets
+- type: storage.v1.bucket
+#- type: gcp-types/storage-v1:buckets
   name: bucket-{{ env["deployment"] }}
   properties:
     predefinedAcl: projectPrivate
